@@ -16,17 +16,19 @@ $(function () {
         let userAvatarUrl = lastPushEvent.actor.avatar_url;
         let repoNameData = lastPushEvent.repo.name;
         let repoUrlData = lastPushEvent.repo.url;
-        let pushDateData = lastPushEvent.created_at;
-
+        let pushDateISO8601 = lastPushEvent.created_at;
+        let pushDate_Date = String(new Date(pushDateISO8601));
+        let pushDateData= pushDate_Date.replace("GMT+0100 (czas środkowoeuropejski standardowy)", "");
         let userAvatar = $('<img class="avatar">').attr('src', userAvatarUrl);
         let repoName = $('<li>').text(repoNameData);
-        let pushDate = $('<li>').text(pushDateData);
         let repoUrl = $('<li>').append($('<a>').attr('href', repoUrlData).text(repoUrlData));
+        let pushDate = $('<li>').text(pushDateData);
+        
 
         $('.content--background').append(userAvatar);
         repo_data.append(repoName);
-        repo_data.append(pushDate);
         repo_data.append(repoUrl);
+        repo_data.append(pushDate);
 
         showbtn.addClass('hide');
         $('#userName').addClass('hide');
